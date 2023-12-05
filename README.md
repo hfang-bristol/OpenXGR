@@ -39,7 +39,7 @@ if(!("BiocManager" %in% rownames(installed.packages()))) install.packages("BiocM
 BiocManager::install(c('remotes','tidyverse'), dependencies=T)
 
 # then, install the package 'OpenXGR' (now hosted at github)
-BiocManager::install("23verse/OpenXGR", dependencies=T, force=T)
+BiocManager::install("hfang-bristol/OpenXGR", dependencies=T, force=T)
 
 # check the package 'OpenXGR' successfully installed
 library(OpenXGR)
