@@ -1,4 +1,4 @@
-# [An R package `OpenXGR`](https://github.com/23verse/OpenXGR)
+# [An R package `OpenXGR`](https://github.com/hfang-bristol/OpenXGR)
 
 ## @ Overview
 
