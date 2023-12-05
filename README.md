@@ -9,7 +9,7 @@
 
 ### 1. Install R
 
-Please install R (version 4.2.1 or above); see https://cran.r-project.org
+Please install R (version 4.3.1 or above); see https://cran.r-project.org
 
 If installed on `Ubuntu` (assuming you have a `ROOT (sudo)` privilege), please do so below
 
@@ -17,9 +17,9 @@ If installed on `Ubuntu` (assuming you have a `ROOT (sudo)` privilege), please d
 sudo su
 # here enter your password
 
-wget http://www.stats.bris.ac.uk/R/src/base/R-4/R-4.2.1.tar.gz
-tar xvfz R-4.2.1.tar.gz
-cd ~/R-4.2.1
+wget http://www.stats.bris.ac.uk/R/src/base/R-4/R-4.3.1.tar.gz
+tar xvfz R-4.3.1.tar.gz
+cd ~/R-4.3.1
 ./configure
 make
 make check
