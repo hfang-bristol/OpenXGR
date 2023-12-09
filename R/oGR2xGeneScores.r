@@ -92,7 +92,9 @@ oGR2xGeneScores <- function(data, significance.threshold=NULL, score.cap=NULL, b
     
     ####################################################################################
     
-    df_Evidence <- xGenes$Evidence %>% transmute(Gene, GR, LScore=Score, Context, dGR) %>% inner_join(df_GR %>% transmute(dGR=GR, RScore=Score), by='dGR') %>% mutate(CScore=RScore*LScore) %>% arrange(Context, -CScore) %>% transmute(dGR,GR,Gene,RScore,LScore,CScore,Context)
+    Gene <- GR <- Context <- dGR <- RScore <- LScore <- CScore <- NULL
+    
+    df_Evidence <- xGenes$Evidence %>% dplyr::transmute(Gene, GR, LScore=Score, Context, dGR) %>% dplyr::inner_join(df_GR %>% dplyr::transmute(dGR=GR, RScore=Score), by='dGR') %>% dplyr::mutate(CScore=RScore*LScore) %>% dplyr::arrange(Context, -CScore) %>% dplyr::transmute(dGR,GR,Gene,RScore,LScore,CScore,Context)
     
     ls_df_SGS <- split(x=df_Evidence, f=df_Evidence$Context)
 	ls_res_df <- lapply(1:length(ls_df_SGS), function(j){
@@ -131,7 +133,7 @@ oGR2xGeneScores <- function(data, significance.threshold=NULL, score.cap=NULL, b
 		#############
 		## for output
 		GScore <- NULL
-		df_xGene <- tibble(Gene=names(seeds.genes), GScore=x*10, Context=names(ls_df_SGS)[j]) %>% dplyr::arrange(-GScore)
+		df_xGene <- tibble::tibble(Gene=names(seeds.genes), GScore=x*10, Context=names(ls_df_SGS)[j]) %>% dplyr::arrange(-GScore)
 		
 	})
 	df_xGene <- do.call(rbind, ls_res_df)
@@ -155,7 +157,7 @@ oGR2xGeneScores <- function(data, significance.threshold=NULL, score.cap=NULL, b
 	#############
 	## for output
 	#############
-	Score <- Symbol <- description <- NULL
+	Gene <- GScore <- Description <- Context <- NULL
 	### add description (based on NCBI genes)
 	#gene_info <- oRDS("org.Hs.eg", verbose=verbose, placeholder=placeholder, guid=guid)
 	#df_xGene <- df_xGene %>% inner_join(gene_info$info %>% transmute(Gene=Symbol,Description=description), by="Gene") %>% transmute(Gene, GScore, Description)
@@ -163,6 +165,8 @@ oGR2xGeneScores <- function(data, significance.threshold=NULL, score.cap=NULL, b
 	df_gr_Gene <- tibble::tibble(Gene=names(gr_Gene), Description=gr_Gene$Description)
 	df_xGene <- df_xGene %>% dplyr::inner_join(df_gr_Gene, by="Gene") %>% dplyr::transmute(Gene, GScore, Description, Context)
 	#############
+    
+    GR <- Pval <- NULL
     
     xGene <- list(xGene=df_xGene,
     			  GR=df_GR %>% tibble::as_tibble() %>% dplyr::transmute(dGR=GR, Pvalue=Pval),

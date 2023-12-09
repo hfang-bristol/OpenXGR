@@ -315,7 +315,7 @@ oGR2xGenes <- function(data, format=c("chr:start-end","data.frame","bed","GRange
 			## for output
 			GScore <- NULL
 			#df_xGene <- tibble(Gene=names(seeds.genes), Score=seeds.genes, LScore=x*10, Context=names(ls_df_SGS)[j]) %>% dplyr::arrange(-Score)
-			df_xGene <- tibble(Gene=names(seeds.genes), GScore=x*10, Context=names(ls_df_SGS)[j]) %>% dplyr::arrange(-GScore)
+			df_xGene <- tibble::tibble(Gene=names(seeds.genes), GScore=x*10, Context=names(ls_df_SGS)[j]) %>% dplyr::arrange(-GScore)
 			
 		})
 		res_df <- do.call(rbind, ls_res_df)
@@ -329,11 +329,12 @@ oGR2xGenes <- function(data, format=c("chr:start-end","data.frame","bed","GRange
 			
 			# df_SGS_customised
 			df_SGS_customised <- oGR2nGenes(data=dGR, format="GRanges", distance.max=nearby.distance.max, decay.kernel=nearby.decay.kernel, decay.exponent=nearby.decay.exponent, GR.Gene=GR.Gene, scoring=FALSE, scoring.scheme=scoring.scheme, scoring.rescale=FALSE, verbose=FALSE, placeholder=placeholder, guid=guid)
-			df_SGS_customised <- df_SGS_customised %>% as_tibble() %>% transmute(GR, Gene, Score=Weight, Context=context)
+			df_SGS_customised <- df_SGS_customised %>% tibble::as_tibble() %>% transmute(GR, Gene, Score=Weight, Context=context)
 			
 			# res_df
+			GScore <- context <- NULL
 			df <- oGR2nGenes(data=dGR, format="GRanges", distance.max=nearby.distance.max, decay.kernel=nearby.decay.kernel, decay.exponent=nearby.decay.exponent, GR.Gene=GR.Gene, scoring=TRUE, scoring.scheme=scoring.scheme, scoring.rescale=FALSE, verbose=FALSE, placeholder=placeholder, guid=guid)
-			res_df <- tibble(Gene=df$Gene, GScore=df$Score*10, Context=context) %>% dplyr::arrange(-GScore)
+			res_df <- tibble::tibble(Gene=df$Gene, GScore=df$Score*10, Context=context) %>% dplyr::arrange(-GScore)
 			
 			if(verbose){
 				message(sprintf("\t%d xGenes (out of %d genomic regions) are defined as nearby genes within %d(bp) genomic distance window using '%s' decay kernel (%s)", length(unique(res_df$Gene)), length(dGR), nearby.distance.max, nearby.decay.kernel, as.character(Sys.time())), appendLF=TRUE)
@@ -348,7 +349,7 @@ oGR2xGenes <- function(data, format=c("chr:start-end","data.frame","bed","GRange
 	#############
 	## for output
 	#############
-	Score <- Symbol <- description <- NULL
+	Gene <- GScore <- Description <- Context <- NULL
 	### add description (based on NCBI genes)
 	#gene_info <- oRDS("org.Hs.eg", verbose=verbose, placeholder=placeholder, guid=guid)
 	#df_xGene <- df_xGene %>% inner_join(gene_info$info %>% transmute(Gene=Symbol,Description=description), by="Gene") %>% transmute(Gene, GScore, Description)
@@ -367,7 +368,7 @@ oGR2xGenes <- function(data, format=c("chr:start-end","data.frame","bed","GRange
    		Gene2GR <- Gene2GR %>% dplyr::inner_join(df_dGR_GR, by='GR')
     }
     #############
-    
+    GR <- Gene <- Score <- Context <- dGR <- GScore <- NULL
     df_evidence <- Gene2GR %>% dplyr::select(GR, Gene, Score, Context, dGR) %>% dplyr::inner_join(df_xGene, by=c("Gene","Context")) %>% dplyr::arrange(-GScore, Gene, GR, Context) %>% dplyr::select(Gene, GR, Score, Context, dGR)
     
     xGene <- list(xGene=df_xGene,

@@ -274,11 +274,11 @@ oSNP2xGenes <- function(data, include.LD=NA, LD.customised=NULL, LD.r2=0.8, sign
 	#############
 	## for output
 	Score <- NULL
-	df_xGene <- tibble(Gene=names(seeds.genes), Score=seeds.genes, LScore=x*10) %>% dplyr::arrange(-Score)
+	df_xGene <- tibble::tibble(Gene=names(seeds.genes), Score=seeds.genes, LScore=x*10) %>% dplyr::arrange(-Score)
 	
-	Symbol <- description <- NULL
+	Symbol <- description <- Gene <- Score <- LScore <- Description <- NULL
 	gene_info <- oRDS("org.Hs.eg", verbose=verbose, placeholder=placeholder, guid=guid)
-	df_xGene <- df_xGene %>% inner_join(gene_info$info %>% transmute(Gene=Symbol,Description=description), by="Gene") %>% transmute(Gene, Score, LScore, Description)
+	df_xGene <- df_xGene %>% dplyr::inner_join(gene_info$info %>% dplyr::transmute(Gene=Symbol,Description=description), by="Gene") %>% dplyr::transmute(Gene, Score, LScore, Description)
 	#############
 	
 	if(verbose){
@@ -314,7 +314,7 @@ oSNP2xGenes <- function(data, include.LD=NA, LD.customised=NULL, LD.r2=0.8, sign
     #####
     ## SNP
     SNP <- Score <- Pval <- Flag <- NULL
-    df_SNP <- df_SNP %>% as_tibble() %>% dplyr::arrange(desc(Flag), -Score, Pval, desc(SNP))
+    df_SNP <- df_SNP %>% tibble::as_tibble() %>% dplyr::arrange(desc(Flag), -Score, Pval, desc(SNP))
     
     ## nGenes
     if(is.null(df_nGenes)){
@@ -343,12 +343,12 @@ oSNP2xGenes <- function(data, include.LD=NA, LD.customised=NULL, LD.r2=0.8, sign
     
     #####
     ## append
-    df_Gene2SNP <- Gene2SNP %>% as_tibble()
-    df_n <- nGenes %>% as_tibble()
-    df_e <- eGenes %>% as_tibble()
-    df_c <- cGenes %>% as_tibble()
+    df_Gene2SNP <- Gene2SNP %>% tibble::as_tibble()
+    df_n <- nGenes %>% tibble::as_tibble()
+    df_e <- eGenes %>% tibble::as_tibble()
+    df_c <- cGenes %>% tibble::as_tibble()
 	
-	Gene <- SNP <- SNP_Flag <- Context <- LScore <- NULL
+	Gene <- SNP <- SNP_Flag <- Context <- LScore <- Context <- NULL
 	if(nrow(df_n)>0){
 		df_n <- df_n %>% transmute(Gene,SNP,SNP_Flag,Context=str_c("Proximity_",distance.max,"bp"))
 	}
@@ -358,7 +358,7 @@ oSNP2xGenes <- function(data, include.LD=NA, LD.customised=NULL, LD.r2=0.8, sign
 	if(nrow(df_c)>0){
 		df_c <- df_c %>% transmute(Gene,SNP,SNP_Flag,Context)
 	}
-	df_evidence <- rbind(df_n, df_e, df_c) %>% inner_join(df_xGene, by="Gene") %>% select(Gene,SNP,SNP_Flag,Context,LScore) %>% arrange(-LScore, Gene, SNP_Flag, SNP, Context)
+	df_evidence <- rbind(df_n, df_e, df_c) %>% dplyr::inner_join(df_xGene, by="Gene") %>% dplyr::select(Gene,SNP,SNP_Flag,Context,LScore) %>% dplyr::arrange(-LScore, Gene, SNP_Flag, SNP, Context)
     
     xGene <- list(xGene=df_xGene,
     			  SNP=df_SNP,

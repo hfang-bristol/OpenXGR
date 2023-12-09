@@ -42,10 +42,10 @@ default color palette). Alternatively, any hyphen-separated HTML color
 names, e.g. "lightyellow-orange" (by default), "blue-black-yellow",
 "royalblue-white-sandybrown", "darkgreen-white-darkviolet". A list of
 standard color names can be found in
-\url{http://html-color-codes.info/color-names}. It can also be a
-function of 'grDevices::colorRampPalette'. It can also be "brewer.*"
-(RColorBrewer palette; see RColorBrewer::display.brewer.all()). It can
-be colorspace defaults
+\url{https://html-color-codes.info/color-names/index.html}. It can also
+be a function of 'grDevices::colorRampPalette'. It can also be
+"brewer.*" (RColorBrewer palette; see
+RColorBrewer::display.brewer.all()). It can be colorspace defaults
 ("rainbow_hcl","heat_hcl","terrain_hcl","diverge_hcl") or other useful
 ones
 ("hcl_br","hcl_bp","hcl_bb","hcl_gp","hcl_go","hcl_cp","hcl_cy","hcl_co")}
@@ -89,7 +89,7 @@ red-yellow-green-cyan-blue-magenta}
 "darkblue-lightblue-lightyellow-darkorange",
 "darkgreen-white-darkviolet", "darkgreen-lightgreen-lightpink-darkred".
 A list of standard color names can be found in
-\url{http://html-color-codes.info/color-names}}
+\url{https://html-color-codes.info/color-names/index.html}}
 }
 }
 \examples{

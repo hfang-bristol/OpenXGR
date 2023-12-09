@@ -2,10 +2,10 @@ Package: OpenXGR
 Type: Package
 Title: Enhanced genomic summary data interpretation leveraging ontologies and networks 
 Version: 1.0.0
-Date: 2023-12-5
+Date: 2023-12-9
 Authors@R: c(person("Hai", "Fang", email="fh12355@rjh.com.cn", role=c("aut","cre")))
 Maintainer: Hai Fang <fh12355@rjh.com.cn>
-Depends: R (>= 4.2.0), igraph, ggplot2
+Depends: R (>= 4.3), igraph, ggplot2
 Imports: BiocGenerics, dplyr, forcats, GenomicRanges, ggnetwork, ggrepel, IRanges, magrittr, Matrix, methods, osfr, purrr, readr, stats, stringr, tibble, tidyr, XML, pbapply, curl, ggraph
 Suggests: coin, foreach, ggridges, grid, gridExtra, RColorBrewer, rtracklayer, Gviz, MASS, dnet, graphics, grDevices, S4Vectors, utils, ggbio, GenomeInfoDb, doParallel, scales, data.tree, jsonlite
 Description: In biomedical research, genomics experiments generate a wealth body of genomic summary data. OpenXGR offers enrichment and subnetwork analyses for a user-input list of genes, SNPs, genomic regions, or protein domains. It is implemented through leveraging ontologies, networks, and many others (such as e/pQTL, promoter capture Hi-C, and enhancer-gene maps).
