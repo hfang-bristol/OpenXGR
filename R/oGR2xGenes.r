@@ -368,7 +368,7 @@ oGR2xGenes <- function(data, format=c("chr:start-end","data.frame","bed","GRange
    		Gene2GR <- Gene2GR %>% dplyr::inner_join(df_dGR_GR, by='GR')
     }
     #############
-    GR <- Gene <- Score <- Context <- dGR <- GScore <- NULL
+    GR <- Gene <- Score <- Context <- GScore <- NULL
     df_evidence <- Gene2GR %>% dplyr::select(GR, Gene, Score, Context, dGR) %>% dplyr::inner_join(df_xGene, by=c("Gene","Context")) %>% dplyr::arrange(-GScore, Gene, GR, Context) %>% dplyr::select(Gene, GR, Score, Context, dGR)
     
     xGene <- list(xGene=df_xGene,
